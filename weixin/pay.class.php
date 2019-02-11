@@ -6,7 +6,7 @@ class Common_util_pub
 { 
     public function sendhongbaoto($arr){
         $data['mch_id'] = ' ';
-        $data['mch_billno'] = $data['mch_id'].date("YmdHis",time()).rand(1111,9999).uniqid();// 商户订单号
+        $data['mch_billno'] = uniqid($data['mch_id'].date("YmdHis",time()).rand(1111,9999));// 商户订单号
         $data['nonce_str'] = uniqid();
         $data['re_openid'] = $arr['openid'];// 红包接受方openid
         $data['wxappid'] = '';
