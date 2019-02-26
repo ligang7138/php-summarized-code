@@ -38,7 +38,7 @@ class Common_util_pub
 
 
     /**
-      *作用：array转xml
+     * 作用：array转xml
      * @param $arr
      * @return string
      */
