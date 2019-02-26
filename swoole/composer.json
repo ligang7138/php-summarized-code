@@ -1,0 +1,28 @@
+{
+  "name": "swoft/homework",
+  "type": "project",
+  "keywords": [
+    "swoole",
+    "homework"
+  ],
+  "description": "six start homework",
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">=7.0",
+    "ext-swoole": ">=2.1"
+  },
+  "require-dev": {
+    "swoft/swoole-ide-helper": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "HomeWork\\": "homeWork/"
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.laravel-china.org"
+    }
+  }
+}
