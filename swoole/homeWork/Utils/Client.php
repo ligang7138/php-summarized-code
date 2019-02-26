@@ -37,7 +37,7 @@ class Client{
     }
 
     public function send($data){
-        self::$client->send($data."\n");
+        self::$client->send($data);
         $recv = self::$client->recv();
         if(is_null($recv)){
             exit('服务端返回数据为空');

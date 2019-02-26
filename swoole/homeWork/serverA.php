@@ -51,7 +51,7 @@ class serverA
 
         print_r(unpack('Nlen/a*string',$data));
 //        $server->send($fd,'服务端接受的数据：'.substr($data,0,unpack('N',$data)[1]).PHP_EOL);
-        $server->send($fd,'服务端接受的数据：'.unpack('N',substr($data,0,4))[1].PHP_EOL);
+        $server->send($fd,'服务端接受的数据：'.$fd.'--'.unpack('N',substr($data,0,4))[1].PHP_EOL);
 //        echo $fd.'-'.$reactor_id.$data.PHP_EOL;
     }
 
