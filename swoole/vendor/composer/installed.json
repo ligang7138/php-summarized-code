@@ -1,0 +1,38 @@
+[
+    {
+        "name": "swoft/swoole-ide-helper",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swoft-cloud/swoole-ide-helper.git",
+            "reference": "912a2c5db04c859531d7e89a1a985bb63354fe8d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swoft-cloud/swoole-ide-helper/zipball/912a2c5db04c859531d7e89a1a985bb63354fe8d",
+            "reference": "912a2c5db04c859531d7e89a1a985bb63354fe8d",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "time": "2019-01-06T11:09:21+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "description": "ide helper for Swoft and Swoole",
+        "keywords": [
+            "ide-helper",
+            "php",
+            "swoft",
+            "swoole"
+        ]
+    }
+]

@@ -1,0 +1,57 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a8267d81f55c63d2d0a5add1f14285a4",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "swoft/swoole-ide-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swoft-cloud/swoole-ide-helper.git",
+                "reference": "912a2c5db04c859531d7e89a1a985bb63354fe8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swoft-cloud/swoole-ide-helper/zipball/912a2c5db04c859531d7e89a1a985bb63354fe8d",
+                "reference": "912a2c5db04c859531d7e89a1a985bb63354fe8d",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "ide helper for Swoft and Swoole",
+            "keywords": [
+                "ide-helper",
+                "php",
+                "swoft",
+                "swoole"
+            ],
+            "time": "2019-01-06T11:09:21+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "swoft/swoole-ide-helper": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.0",
+        "ext-swoole": ">=2.1"
+    },
+    "platform-dev": []
+}
