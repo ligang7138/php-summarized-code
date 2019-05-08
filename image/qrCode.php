@@ -6,7 +6,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 
 /**
  * 关键字
- * 图片合成 gd库 二维码生成
+ * 图片合成 gd库 二维码生成 图片与base64相互转换
  * Class qrCode
  */
 class qrCode
@@ -58,8 +58,11 @@ class qrCode
 
         // 将两个图片合并
         imagecopymerge($dst, $src, ($dst_w-$src_w)/2,300, 0, 0, $src_w, $src_h, 100);
-        // 用白色写文字
+        // 创建颜色
         $white = imagecolorallocate($dst, 255, 255, 255);
+        $grey = imagecolorallocate($dst, 128, 128, 128);
+        $black = imagecolorallocate($dst, 0, 0, 0);
+//        imagefilledrectangle($dst, 0, 0, 399, 29, $white);
 
         $font = $this->getParameter('admin_bundle')['ttf_path'];
         $text = $partner_name;
@@ -72,6 +75,8 @@ class qrCode
         $y = ($dst_h+$src_h)/2+25; //计算文字的垂直位置
 
         imagettftext($dst, $font_size, 0, $x, $y, $white, $font,$text);//写入文字
+        //如果需要加粗,让x坐标加1
+        imagettftext($dst, $font_size, 0, $x+1, $y, $white, $font,$text);
 
         $img = "{$partner_id}.png";
         if(!imagepng($dst,$img)){
@@ -107,10 +112,42 @@ class qrCode
                 'down_url' => $content,
             ];
         }
+
+        //第一种：图片输出到页面
+        /*switch ($dst_type) {
+          case 1://GIF
+              header('Content-Type: image/gif');
+              imagegif($dst);
+              break;
+          case 2://JPG
+              header('Content-Type: image/jpeg');
+              imagejpeg($dst);
+              break;
+          case 3://PNG
+              header('Content-Type: image/png');
+              imagepng($dst);
+              break;
+          default:
+              break;
+      }
+      imagedestroy($dst);
+      imagedestroy($src);*/
+
+        //第二种：输出到本地文件夹，返回生成图片的路径
+        $fileName= md5(rand(0,999));
+        $EchoPath='./images/'.$fileName.'.png';
+        imagepng($dst,$EchoPath);
+        imagedestroy($dst);
+        return $EchoPath;
     }
 
 
     /**
+     * 在使用phpcurl post数据的时候，当数据超过1k的时候，会失败，不会直接发起请求，而是分为两步：
+        一，发送一个请求，包含“Expect:100-continue”头域，询问SERVER是否愿意接收
+        二，接收到SERVER返回的 100-continue应答以后，才可以继续POST数据
+       解决办法：
+        添加curl请求头  curl_setopt($ch,CURLOPT_HTTPHEADER,array(“Expect:”));
      * curl请求，支持post, get方式
      * @return string $file_contents
      */
@@ -151,5 +188,43 @@ class qrCode
         else{
             return false;
         }
+    }
+
+    /**
+     * @param $base64Str base64格式的图片字符串数据
+     * @param $path 保存的文件路径和文件名(不用带扩展名 自动匹配)
+     */
+    public static function base64ToImg($base64Str,$path){
+        $arr = explode(',',$base64Str);
+        $bin = base64_decode($arr[1]);
+        $ext = self::getImgExt($bin);//获取真实扩展名
+        if($ext !== false){
+            file_put_contents($path . '.' . $ext,$bin);
+        }else{
+            exit('图片格式非法');
+        }
+    }
+
+    /**
+     * 获取图片文件的扩展名 如果不是图片数据则返回false
+     * @param $bin 二进制图片数据流
+     * @return bool|int|string 图片扩展名
+     */
+    public static function getImgExt($bin){
+
+        $bits = array(
+            'jpg' => "\xFF\xD8\xFF",
+            'gif' => "GIF",
+            'png' => "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a",
+            'bmp' => 'BM',
+        );
+
+        foreach ($bits as $type => $bit) {
+            if (substr($bin, 0, strlen($bit)) === $bit) {
+                return $type;
+            }
+        }
+        return false;
+
     }
 }
