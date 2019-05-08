@@ -24,3 +24,6 @@ $time->setTimestamp(strtotime('+2 day'));
     [timezone_type] => 3
     [timezone] => Asia/Chongqing
 )*/
+
+echo date('Y-m-d', strtotime('2019-05-01 -1 days -1 month'));
+echo date('Y-m-d', strtotime('2019-05-01 -1 month'));
