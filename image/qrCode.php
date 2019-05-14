@@ -1,9 +1,9 @@
 <?php
 
 
-use AdminBundle\Common\CommonFunction;
 use Endroid\QrCode\ErrorCorrectionLevel;
-
+use Endroid\QrCode\QrCode as Code;
+require_once ('../vendor/composer/');
 /**
  * 关键字
  * 图片合成 gd库 二维码生成 图片与base64相互转换
@@ -16,14 +16,15 @@ class qrCode
      * @param $type 默认false 将图片存储到远程oss服务器 true直接输出base64格式图片
      * @return array
      */
-    public function createQr($codeMsg,$type = false){
-        $qrCode = new \Endroid\QrCode\QrCode(CommonFunction::aesCrypt($codeMsg));
+    public static function createQr($codeMsg,$type = false){
+        $qrCode = new Code(self::aesCrypt($codeMsg));
         $qrCode->setSize(590);
         $qrCode->setMargin(50);
         $qrCode->setEncoding('UTF-8');
         $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::HIGH));
         $qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
         $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
+        print_r($qrCode);die;
         $logoPath = $this->getParameter('admin_bundle')['logo_path'];
         if($logoPath){
             $qrCode->setLogoPath($logoPath);
@@ -170,6 +171,30 @@ class qrCode
     }
 
     /**
+     * 加/解密
+     * @param string $data 待加密串或待解密串
+     * @param boolean $is_crypt 是否加密 默认为加密,否则为解密
+     * @param string $key 加密Key值
+     * @return string
+     */
+    public static function aesCrypt($data = '', $is_crypt = true, $key = '')
+    {
+        $key = empty($key) ? substr(md5(123456), 2, 16) : $key;
+        $privateKey = $iv = $key;
+        $iv = '';
+        if ($is_crypt) {
+            //加密
+            $encrypted = openssl_encrypt($data, 'AES-128-ECB', $privateKey, OPENSSL_RAW_DATA, $iv);
+            return str_replace('+', '-', str_replace('/', '_', str_replace('=', '', base64_encode($encrypted))));
+        } else {
+            //解密
+            $data = str_replace('-', '+', str_replace('_', '/', $data));
+            $decrypted = openssl_decrypt(base64_decode($data), 'AES-128-ECB', $privateKey, OPENSSL_RAW_DATA, $iv);
+            return trim($decrypted);
+        }
+    }
+
+    /**
      * 图片转base64
      * @param ImageFile String 图片路径
      * @return 转为base64的图片
@@ -228,3 +253,5 @@ class qrCode
 
     }
 }
+
+qrCode::createQr('lsjdf');
