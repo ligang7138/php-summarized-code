@@ -9,6 +9,13 @@ use App\Utils\Functions;
 use App\Utils\GeoHash;
 use PhpBoot\Utils\Logger;
 
+/**
+ * 相关文章 铭毅天下
+ * http://www.voidcn.com/article/p-queccqxx-bop.html
+ * http://www.voidcn.com/article/p-fqrmvhkh-ov.html
+ * http://www.voidcn.com/article/p-pfvnkceu-bny.html
+ * Class geoPoint
+ */
 class geoPoint
 {
 
